@@ -1,0 +1,102 @@
+//
+//  Util.swift
+//  FlickerDigitalAlbum
+//
+//  Created by jiran on 25/05/2019.
+//  Copyright © 2019 jiran. All rights reserved.
+//
+
+import UIKit
+
+struct FlickerUnit {
+    let strTitle: String
+    let strLink: String
+    let strM: String
+    let strDateTaken: String
+    let strDescription: String
+    let strPublished: String
+    let strAuthor: String
+    let strAuthorId: String
+    let strTags: String
+    var image: UIImage?
+    
+    init(json: [String: Any]) {
+        let dicJsonMediaItem: [String: Any] = json["media"] as? [String: Any] ?? [:]
+        
+        strTitle = json["title"] as? String ?? ""
+        strLink = json["link"] as? String ?? ""
+        strM = dicJsonMediaItem["m"] as? String ?? ""
+        strDateTaken = json["date_taken"] as? String ?? ""
+        strDescription = json["description"] as? String ?? ""
+        strPublished = json["published"] as? String ?? ""
+        strAuthor = json["author"] as? String ?? ""
+        strAuthorId = json["author_id"] as? String ?? ""
+        strTags = json["tags"] as? String ?? ""
+        image = nil
+    }
+}
+
+struct FlickerList {
+    let strTitle: String
+    let strLink: String
+    let strDescription: String
+    let strModified: String
+    let strGenerator: String
+    var arrFlickerUnit: [FlickerUnit] = []
+    
+    init(json: [String: Any]) {
+        strTitle = json["title"] as? String ?? ""
+        strLink = json["link"] as? String ?? ""
+        strDescription = json["description"] as? String ?? ""
+        strModified = json["modified"] as? String ?? ""
+        strGenerator = json["generator"] as? String ?? ""
+        
+        let arrJsonItems: [Any] = json["items"] as? [Any] ?? []
+        
+        for nJsonCount in 0..<arrJsonItems.count {
+            let dicJsonItem: [String: Any] = arrJsonItems[nJsonCount] as? [String: Any] ?? [:]
+            let flickerUnit: FlickerUnit = FlickerUnit.init(json: dicJsonItem)
+            
+            arrFlickerUnit.append(flickerUnit)
+        }
+    }
+}
+
+class Util: NSObject {
+    
+    static func requestFlickerList(completFunc: @escaping (FlickerList) -> Void,
+                                   errorFunc: @escaping (String) -> Void) {
+        
+        let url = URL(string: "https://api.flickr.com/services/feeds/photos_public.gne?tags=landscape,portrait&tagmode=any&format=json&nojsoncallback=1")
+        let request = URLRequest(url: url!)
+        
+        let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
+            
+            DispatchQueue.main.async() {
+                guard let data = data, error == nil else {
+                    errorFunc("networking error")
+                    return
+                }
+                
+                if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
+                    errorFunc("statusCode should be 200, but is \(httpStatus.statusCode)")
+                }
+                
+                do {
+                    guard let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] else {
+                        errorFunc("json make error")
+                        return
+                    }
+                    
+                    let flickerList: FlickerList = FlickerList.init(json: json)
+                    completFunc(flickerList)
+                    
+                } catch {
+                    errorFunc("json make error")
+                }
+            }
+        }
+        
+        task.resume()
+    }
+}
