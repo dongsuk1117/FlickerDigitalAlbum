@@ -62,22 +62,14 @@ class DataManager: NSObject {
     func downloadImage(strImageUrl: String,
                        completFunc: @escaping (UIImage) -> Void,
                        errorFunc: @escaping () -> Void) {
-        
-        DispatchQueue.global().async {
+        do {
+            let url: URL = URL.init(string: strImageUrl)!
+            let imageData: Data = try Data(contentsOf: url)
+            let image: UIImage = UIImage(data: imageData)!
             
-            do {
-                let url: URL = URL.init(string: strImageUrl)!
-                let imageData: Data = try Data(contentsOf: url)
-                let image: UIImage = UIImage(data: imageData)!
-                
-                DispatchQueue.main.async {
-                    completFunc(image)
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    errorFunc()
-                }
-            }
+            completFunc(image)
+        } catch {
+            errorFunc()
         }
     }
 }

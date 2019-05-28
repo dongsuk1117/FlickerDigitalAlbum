@@ -72,7 +72,7 @@ class Util: NSObject {
         
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
             
-            DispatchQueue.main.async() {
+            DispatchQueue.main.async {
                 guard let data = data, error == nil else {
                     errorFunc("networking error")
                     return

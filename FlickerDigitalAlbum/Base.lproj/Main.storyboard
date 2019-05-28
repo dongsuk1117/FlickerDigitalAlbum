@@ -30,13 +30,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="시작 화면 이미지 시간" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vjm-rl-upH">
-                                                    <rect key="frame" x="20" y="0.0" width="286" height="47.5"/>
+                                                    <rect key="frame" x="20" y="0.0" width="680" height="47.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 초" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="myw-Px-jxa">
-                                                    <rect key="frame" x="314" y="0.0" width="100" height="47.5"/>
+                                                    <rect key="frame" x="708" y="0.0" width="100" height="47.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="100" id="p42-c2-dUB"/>
                                                     </constraints>
@@ -45,7 +45,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="1" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="7Rm-Bq-60b">
-                                                    <rect key="frame" x="18" y="47.5" width="378" height="30"/>
+                                                    <rect key="frame" x="18" y="47.5" width="772" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="29" id="d2L-h0-jUt"/>
                                                     </constraints>
@@ -98,7 +98,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kGD-uV-7ew" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1682.608695652174" y="-771.42857142857144"/>
+            <point key="canvasLocation" x="2787" y="-279"/>
         </scene>
         <!--Loding View Controller-->
         <scene sceneID="ANf-hg-yQu">
@@ -217,26 +217,53 @@ Digital Album</string>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G2l-sS-JJD">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eZE-DX-3cQ">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="c13-s1-R9w">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="55s-9V-Psb">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="G2l-sS-JJD" firstAttribute="top" secondItem="cNH-UT-Ge7" secondAttribute="top" id="4a3-Tl-OeZ"/>
                             <constraint firstItem="55s-9V-Psb" firstAttribute="top" secondItem="cNH-UT-Ge7" secondAttribute="top" id="Edt-GZ-Gxh"/>
                             <constraint firstItem="55s-9V-Psb" firstAttribute="leading" secondItem="cNH-UT-Ge7" secondAttribute="leading" id="HK5-7k-iaH"/>
+                            <constraint firstAttribute="bottom" secondItem="G2l-sS-JJD" secondAttribute="bottom" id="Lql-6l-iJU"/>
+                            <constraint firstItem="eZE-DX-3cQ" firstAttribute="top" secondItem="cNH-UT-Ge7" secondAttribute="top" id="Qwf-Nf-ost"/>
+                            <constraint firstAttribute="trailing" secondItem="G2l-sS-JJD" secondAttribute="trailing" id="Ru3-BD-J1n"/>
+                            <constraint firstAttribute="bottom" secondItem="eZE-DX-3cQ" secondAttribute="bottom" id="idm-YR-Ikk"/>
+                            <constraint firstItem="eZE-DX-3cQ" firstAttribute="leading" secondItem="cNH-UT-Ge7" secondAttribute="leading" id="kPO-XC-NzD"/>
+                            <constraint firstItem="G2l-sS-JJD" firstAttribute="leading" secondItem="cNH-UT-Ge7" secondAttribute="leading" id="qf6-8u-8qr"/>
+                            <constraint firstAttribute="trailing" secondItem="eZE-DX-3cQ" secondAttribute="trailing" id="sOb-sq-3Q6"/>
                             <constraint firstAttribute="bottom" secondItem="55s-9V-Psb" secondAttribute="bottom" id="u0O-PZ-NTk"/>
                             <constraint firstAttribute="trailing" secondItem="55s-9V-Psb" secondAttribute="trailing" id="ur4-cA-enH"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="pFi-N6-1mH"/>
                     </view>
+                    <navigationItem key="navigationItem" title="앨범" id="AwI-Cw-zgg">
+                        <barButtonItem key="rightBarButtonItem" title="설정" id="AdF-Di-wTp">
+                            <connections>
+                                <segue destination="vsl-Rl-Yoj" kind="show" id="wAO-K0-j4X"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
-                        <outlet property="mImageView1" destination="55s-9V-Psb" id="CKI-Nv-RYT"/>
+                        <outlet property="backImageView" destination="G2l-sS-JJD" id="lnv-zK-ZEp"/>
+                        <outlet property="imageView" destination="55s-9V-Psb" id="YrR-E1-gaF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="puV-tt-ELg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1682.1428571428571" y="-60.869565217391312"/>
+            <point key="canvasLocation" x="1782.5892857142856" y="215.94202898550725"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Tr1-BC-xb1">
@@ -254,4 +281,7 @@ Digital Album</string>
             <point key="canvasLocation" x="-855" y="-279"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="wAO-K0-j4X"/>
+    </inferredMetricsTieBreakers>
 </document>
