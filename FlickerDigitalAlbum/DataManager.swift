@@ -31,8 +31,8 @@ class DataManager: NSObject {
     func requestInitFlickerList(completFunc: @escaping () -> Void, errorFunc: @escaping () -> Void) {
         self.completFunc = completFunc
         self.errorFunc = errorFunc
-        Util.requestFlickerList(completFunc: requestInitCompletFunc,
-                                errorFunc: requestErrorFunc)
+        HttpUtil.requestFlickerList(completFunc: requestInitCompletFunc,
+                                    errorFunc: requestErrorFunc)
     }
     
     //초기화 요청 함수 완료 함수
@@ -62,14 +62,15 @@ class DataManager: NSObject {
     func downloadImage(strImageUrl: String,
                        completFunc: @escaping (UIImage) -> Void,
                        errorFunc: @escaping () -> Void) {
-        do {
-            let url: URL = URL.init(string: strImageUrl)!
-            let imageData: Data = try Data(contentsOf: url)
-            let image: UIImage = UIImage(data: imageData)!
-            
-            completFunc(image)
-        } catch {
+        
+        HttpUtil.requestImageDownload(strImageUrl: strImageUrl,
+                                      completFunc: { (data: Data) in
+                                        
+                                        let image: UIImage = UIImage(data: data)!
+                                        completFunc(image)
+                                        
+        }, errorFunc: { (strErrorMessage: String) in
             errorFunc()
-        }
+        })
     }
 }

@@ -19,7 +19,7 @@
 		9CE0FA3A2298E3C10082D9DD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE0FA392298E3C10082D9DD /* MainViewController.swift */; };
 		9CE0FA3C2298E4020082D9DD /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE0FA3B2298E4020082D9DD /* SettingViewController.swift */; };
 		9CE0FA3E2298E5A10082D9DD /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE0FA3D2298E5A10082D9DD /* AlbumViewController.swift */; };
-		9CE0FA402298E73C0082D9DD /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE0FA3F2298E73C0082D9DD /* Util.swift */; };
+		9CE0FA402298E73C0082D9DD /* HttpUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE0FA3F2298E73C0082D9DD /* HttpUtil.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,7 +39,7 @@
 		9CE0FA392298E3C10082D9DD /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		9CE0FA3B2298E4020082D9DD /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		9CE0FA3D2298E5A10082D9DD /* AlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
-		9CE0FA3F2298E73C0082D9DD /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		9CE0FA3F2298E73C0082D9DD /* HttpUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpUtil.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +84,7 @@
 		9CE0FA232298DCF90082D9DD /* FlickerDigitalAlbum */ = {
 			isa = PBXGroup;
 			children = (
-				9CE0FA3F2298E73C0082D9DD /* Util.swift */,
+				9CE0FA3F2298E73C0082D9DD /* HttpUtil.swift */,
 				9C9D1842229AD41F00CD0E17 /* DataManager.swift */,
 				9CE0FA242298DCF90082D9DD /* AppDelegate.swift */,
 				9C9D1844229AD5BD00CD0E17 /* LodingViewController.swift */,
@@ -227,7 +227,7 @@
 			files = (
 				9CE0FA3E2298E5A10082D9DD /* AlbumViewController.swift in Sources */,
 				9CE0FA3A2298E3C10082D9DD /* MainViewController.swift in Sources */,
-				9CE0FA402298E73C0082D9DD /* Util.swift in Sources */,
+				9CE0FA402298E73C0082D9DD /* HttpUtil.swift in Sources */,
 				9C9D1843229AD41F00CD0E17 /* DataManager.swift in Sources */,
 				9C9D1845229AD5BD00CD0E17 /* LodingViewController.swift in Sources */,
 				9CE0FA252298DCF90082D9DD /* AppDelegate.swift in Sources */,

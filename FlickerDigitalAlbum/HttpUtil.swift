@@ -62,7 +62,21 @@ struct FlickerList {
     }
 }
 
-class Util: NSObject {
+class HttpUtil: NSObject {
+    
+    static func getURLSessionConfiguration() -> URLSessionConfiguration {
+        let sessionConfig: URLSessionConfiguration = URLSessionConfiguration.default
+        
+        //타임아웃을 5초로 설정한다.
+        sessionConfig.timeoutIntervalForRequest = 5.0
+        sessionConfig.timeoutIntervalForResource = 5.0
+        
+        //캐시 기능을 사용하지 않도록 설정 한다.
+        sessionConfig.requestCachePolicy = .reloadIgnoringLocalCacheData
+        sessionConfig.urlCache = nil
+        
+        return sessionConfig
+    }
     
     static func requestFlickerList(completFunc: @escaping (FlickerList) -> Void,
                                    errorFunc: @escaping (String) -> Void) {
@@ -70,9 +84,14 @@ class Util: NSObject {
         let url = URL(string: "https://api.flickr.com/services/feeds/photos_public.gne?tags=landscape,portrait&tagmode=any&format=json&nojsoncallback=1")
         let request = URLRequest(url: url!)
         
-        let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
+        //타임아웃 시간을 짧게 변경한다.
+        let sessionConfig = getURLSessionConfiguration()
+        let session: URLSession = URLSession(configuration: sessionConfig)
+        
+        //요청을 진행한다.
+        let task = session.dataTask(with: request) {(data, response, error) in
             
-            DispatchQueue.main.async {
+            DispatchQueue.main.sync {
                 guard let data = data, error == nil else {
                     errorFunc("networking error")
                     return
@@ -94,6 +113,37 @@ class Util: NSObject {
                 } catch {
                     errorFunc("json make error")
                 }
+            }
+        }
+        
+        task.resume()
+    }
+    
+    static func requestImageDownload(strImageUrl: String,
+                                     completFunc: @escaping (Data) -> Void,
+                                     errorFunc: @escaping (String) -> Void) {
+        
+        let url = URL(string: strImageUrl)
+        let request = URLRequest(url: url!)
+        
+        //타임아웃 시간을 짧게 변경한다.
+        let sessionConfig = getURLSessionConfiguration()
+        let session: URLSession = URLSession(configuration: sessionConfig)
+        
+        //요청을 진행한다.
+        let task = session.dataTask(with: request) {(data, response, error) in
+            
+            DispatchQueue.main.sync {
+                guard let data = data, error == nil else {
+                    errorFunc("networking error")
+                    return
+                }
+                
+                if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
+                    errorFunc("statusCode should be 200, but is \(httpStatus.statusCode)")
+                }
+                
+                completFunc(data)
             }
         }
         
