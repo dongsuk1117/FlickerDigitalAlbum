@@ -67,9 +67,9 @@ class HttpUtil: NSObject {
     static func getURLSessionConfiguration() -> URLSessionConfiguration {
         let sessionConfig: URLSessionConfiguration = URLSessionConfiguration.default
         
-        //타임아웃을 5초로 설정한다.
-        sessionConfig.timeoutIntervalForRequest = 5.0
-        sessionConfig.timeoutIntervalForResource = 5.0
+        //타임아웃을 15초로 설정한다.
+        sessionConfig.timeoutIntervalForRequest = 15.0
+        sessionConfig.timeoutIntervalForResource = 15.0
         
         //캐시 기능을 사용하지 않도록 설정 한다.
         sessionConfig.requestCachePolicy = .reloadIgnoringLocalCacheData

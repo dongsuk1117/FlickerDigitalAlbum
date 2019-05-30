@@ -32,7 +32,7 @@ class AlbumViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = false
         
         //슬라이드쇼 시작
-        self.slideshow()
+        self.showNextImage()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,7 +41,7 @@ class AlbumViewController: UIViewController {
 
         //슬라이드가 멈추었다면 시작해준다.
         if self.isSlideshowing == false {
-            self.slideshow()
+            self.showNextImage()
         }
     }
     
@@ -49,19 +49,22 @@ class AlbumViewController: UIViewController {
         self.isSlideshow = false
     }
     
-    func slideshow() {
+    func showNextImage() {
         
         //슬라이드쇼를 진행 하고 있다고 설정
         isSlideshowing = true
-        
-        //처리 시작 시간을 체크한다.
-        let startTime = CFAbsoluteTimeGetCurrent()
         
         //다음 이미지를 위해 1 플러스
         self.nNowCount += 1
         
         //이미지 뷰에 이미지를 넣는다.
         showImage(image: self.dataManager!.flickerList!.arrFlickerUnit[self.nNowCount].image!)
+    }
+    
+    func requestNextImage() {
+        
+        //처리 시작 시간을 체크한다.
+        let startTime = CFAbsoluteTimeGetCurrent()
         
         //다음 이미지를 가져오거나 새롭게 리스트를 요청한다.
         if self.nNowCount == 19 {
@@ -105,7 +108,7 @@ class AlbumViewController: UIViewController {
         let timeElapsed: Double = CFAbsoluteTimeGetCurrent() - startTime
         
         //설정된 목표 시간을 가지고 온다.
-        let sleepTime: Double = Double(DataManager.getAlbumImageTime()) + 0.5 - timeElapsed
+        let sleepTime: Double = Double(DataManager.getAlbumImageTime()) - timeElapsed
         
         //두 시간차가 0보다 작으면 바로 다음 이미지를 진행하고, 시간이 남는다면 남는시간동안 쉰다.
         if sleepTime > 0 {
@@ -115,7 +118,7 @@ class AlbumViewController: UIViewController {
                 DispatchQueue.main.async {
                     
                     if self.isSlideshow {
-                        self.slideshow()
+                        self.showNextImage()
                     } else {
                         self.isSlideshowing = false
                     }
@@ -124,7 +127,7 @@ class AlbumViewController: UIViewController {
             }
         } else {
             if self.isSlideshow {
-                self.slideshow()
+                self.showNextImage()
             } else {
                 self.isSlideshowing = false
             }
@@ -141,7 +144,7 @@ class AlbumViewController: UIViewController {
         //버튼을 만든다.
         let retryAction = UIAlertAction(title: "재시도", style: .default) { (UIAlertAction) in
             //슬라이드쇼 시작
-            self.slideshow()
+            self.requestNextImage()
         }
         let noAction = UIAlertAction(title: "취소", style: .default) { (UIAlertAction) in
             self.showMainViewAlert()
@@ -170,20 +173,6 @@ class AlbumViewController: UIViewController {
     }
     
     func showImage(image: UIImage) {
-        UIView.transition(with: self.imageView,
-                          duration: 0.25,
-                          options: .transitionCrossDissolve,
-                          animations: {
-                            self.imageView.image = nil
-        },
-                          completion: { (isCompletion: Bool) in
-                            UIView.transition(with: self.imageView,
-                                              duration: 0.25,
-                                              options: .transitionCrossDissolve,
-                                              animations: { self.imageView.image = image },
-                                              completion: nil)
-        })
-        
         UIView.transition(with: self.backImageView,
                           duration: 0.25,
                           options: .transitionCrossDissolve,
@@ -196,6 +185,22 @@ class AlbumViewController: UIViewController {
                                               options: .transitionCrossDissolve,
                                               animations: { self.backImageView.image = image },
                                               completion: nil)
+        })
+        
+        UIView.transition(with: self.imageView,
+                          duration: 0.25,
+                          options: .transitionCrossDissolve,
+                          animations: {
+                            self.imageView.image = nil
+        },
+                          completion: { (isCompletion: Bool) in
+                            UIView.transition(with: self.imageView,
+                                              duration: 0.25,
+                                              options: .transitionCrossDissolve,
+                                              animations: { self.imageView.image = image },
+                                              completion: { (finished: Bool) in
+                                                self.requestNextImage()
+                            })
         })
     }
     
